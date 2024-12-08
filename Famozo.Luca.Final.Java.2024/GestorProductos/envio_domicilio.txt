@@ -1,0 +1,3 @@
+Productos para Envío a Domicilio
+-------------------------------------------------------
+Producto{id=1, nombre='Monitor', precio=250.0} - Marca: Sony - Potencia: 20WW

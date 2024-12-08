@@ -1,0 +1,7 @@
+"ID","Nombre","Precio","Tipo","Tipo de Envío"
+"1","Campera de Jean","25.0","Ropa","ENVIO_DOMICILIO"
+"2","Manzana","2.0","Alimentos","RETIRO_LOCAL"
+"3","Heladera","200.0","Electrodomesticos","RETIRO_LOCAL"
+"4","Torta","10.0","Alimentos","ENVIO_DOMICILIO"
+"5","Pantalón de Vestir","50.0","Ropa","ENVIO_DOMICILIO"
+"6","Televisor","200.0","Electrodomesticos","ENVIO_DOMICILIO"

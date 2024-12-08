@@ -1,0 +1,4 @@
+Listado de Productos Filtrados por Tipo: Ropa
+-------------------------------------------------------
+Producto{id=1, nombre='Campera de Jean', precio=25.0} - Talla: Blue - Marca: L
+Producto{id=5, nombre='Pantalón de Vestir', precio=50.0} - Talla: Chelsea - Marca: XL
