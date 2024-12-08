@@ -48,6 +48,7 @@ El botón *'Ordenar'* permite ordenar la lista de productos en la tabla en orden
 
 
 ### Diagrama de Clases UML
+![DiagramaUML_Final_Java_2024](https://github.com/user-attachments/assets/bc535fdb-322d-41e6-b262-306dd7bfbe87)
 
 ### Sobre mí
 Mi nombre es Luca Valentin Famozo, soy estudiante de la Universidad Tecnológica Nacional y actualmente estoy en el segundo año de la Tecnicatura Universitaria en Programación.
