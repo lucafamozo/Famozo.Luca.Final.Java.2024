@@ -37,6 +37,7 @@ El botón *'Ordenar'* permite ordenar la lista de productos en la tabla en orden
 
 
 - Lista de productos filtrada por el tipo de producto (Ropa, Alimento, Electrodoméstico).txt
+
 ![image](https://github.com/user-attachments/assets/93b0735b-45da-4f3e-897d-acf35dfa9b2f)
 
 
