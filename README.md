@@ -32,7 +32,7 @@ El botón *'Ordenar'* permite ordenar la lista de productos en la tabla en orden
 
 
 
-- listaProductos.csv
+- listaProductos.csv (posee un formato distinto al archivo json)
 ![image](https://github.com/user-attachments/assets/7d8d5dac-eeac-41a1-b040-85d5a22e0321)
 
 
