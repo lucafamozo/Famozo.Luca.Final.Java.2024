@@ -5,7 +5,8 @@ El proyecto es un sistema de gestión de productos que permite administrar difer
 El menú principal presenta una serie de casilleros donde el usuario ingresa los datos pertenecientes al producto que desea integrar al inventario. Además, posee una serie de botones, los cuales le permiten al usuario manipular tanto a los productos encontrados en la tabla como a la lista de productos en su totalidad.
 
 ### Menú Principal
-![image](https://github.com/user-attachments/assets/e0f8e149-0890-4029-aab7-ae0a45865fa7)
+![image](https://github.com/user-attachments/assets/48293945-c23e-4325-a3c3-6a10f6092e57)
+
 
 
 
