@@ -50,7 +50,8 @@ El botón *'Ordenar'* permite realizar esto en la lista de productos en la tabla
 
 
 ### Diagrama de Clases UML
-![DiagramaUML_Final_Java_2024](https://github.com/user-attachments/assets/bc535fdb-322d-41e6-b262-306dd7bfbe87)
+![DiagramaUML_Final_Java_2024_FamozoLuca](https://github.com/user-attachments/assets/1da8c450-3ff7-4014-8bfc-b887f9c66002)
+
 
 ### Sobre mí y experiencia con el proyecto
 Mi nombre es Luca Valentin Famozo, soy estudiante de la Universidad Tecnológica Nacional y actualmente estoy en el segundo año de la Tecnicatura Universitaria en Programación.
