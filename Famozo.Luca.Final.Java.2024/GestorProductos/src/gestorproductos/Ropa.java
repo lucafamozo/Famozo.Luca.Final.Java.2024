@@ -8,7 +8,7 @@ package gestorproductos;
  *
  * @author Luca
  */
-public class Ropa extends Productos implements IDescontable {
+public class Ropa extends Productos{
     private String talla;
     private String marca;
     private TipoEnvio tipoEnvio; // Atributo de tipo TipoEnvio
@@ -20,9 +20,19 @@ public class Ropa extends Productos implements IDescontable {
         this.marca = marca;
     }
     
-    // Constructor sobrecargado
+    // Constructores sobrecargados
     public Ropa(int id, String nombre, double precio) {
         super(nombre, precio);
+    }
+    
+    public Ropa( String nombre, double precio, String talla) {
+        super(nombre, precio); // Llamamos al constructor de la clase base (Productos)
+        this.talla = talla;
+    }
+    
+    public Ropa(int id, String nombre, double precio, TipoEnvio tipoEnvio) {
+        super(nombre, precio); // Llamamos al constructor de la clase base (Productos)
+        this.tipoEnvio = tipoEnvio;
     }
 
     // Getters y Setters
@@ -58,30 +68,16 @@ public class Ropa extends Productos implements IDescontable {
     
     @Override
     public double aplicarDescuento() {
-        double precio = getPrecio(); // Obtener el precio original
-        double nuevoPrecio = precio; // Inicializamos el nuevo precio como el original
-
-        // Lógica de descuento para Ropa
-        if (precio > 100) {
-            nuevoPrecio = precio * 0.8; // 20% de descuento
-        } else if (precio > 69) {
-            nuevoPrecio = precio * 0.85; // 15% de descuento
-        } else if (precio > 39) {
-            nuevoPrecio = precio * 0.9;  // 10% de descuento
-        }
-
-        setPrecio(nuevoPrecio); // Actualiza el precio con el descuento
-        return nuevoPrecio;     // Retorna el nuevo precio con el descuento aplicado
+        return this.getPrecio() * 0.10; // Descuento del 10%
     }
     
-    public void aplicarCostoEnvio() {
-        if (tipoEnvio == TipoEnvio.ENVIO_DOMICILIO) {
-            double porcentaje = 0.05; // 5% para ropa
-            setPrecio(getPrecio() * (1 + porcentaje)); // Incrementar precio
-        }
+    @Override
+    public double calcularImpuestos() {
+        return this.getPrecio() * 0.21; // 21% de IVA
     }
-
     
-
-    
+    @Override
+    public double calcularCostoEnvio() {
+        return this.getPrecio() * 0.05; // 5% del precio como costo de envío
+    }
 }

@@ -32,7 +32,7 @@ public class Main extends Application {
 
         // ComboBox para seleccionar el tipo de producto
         ComboBox<String> cbTipoProducto = new ComboBox<>();
-        cbTipoProducto.getItems().addAll("Ropa", "Alimento", "Electrodoméstico");
+        cbTipoProducto.getItems().addAll("Ropa", "Alimento", "Electrodoméstico", "Mueble");
 
         // ComboBox para seleccionar el tipo de envío
         ComboBox<TipoEnvio> cbTipoEnvio = new ComboBox<>();
@@ -46,6 +46,8 @@ public class Main extends Application {
         TextField txtCategoria = new TextField();
         TextField txtFechaCaducidad = new TextField();
         TextField txtPotencia = new TextField();
+        TextField txtTamaño = new TextField();
+        TextField txtMaterial = new TextField();
 
         // Ocultar campos específicos inicialmente
         panelCamposEspecificos.setVisible(false);
@@ -72,6 +74,12 @@ public class Main extends Application {
                     panelCamposEspecificos.getChildren().addAll(
                             new Label("Marca:"), txtMarca,
                             new Label("Potencia (W):"), txtPotencia
+                    );
+                    break;
+                case "Mueble":
+                    panelCamposEspecificos.getChildren().addAll(
+                            new Label("Tamaño:"), txtTamaño,
+                            new Label("Material"), txtMaterial
                     );
                     break;
                 default:
@@ -136,6 +144,16 @@ public class Main extends Application {
                         }
                         productoNuevo = new Electrodomesticos(nombre, precio, marcaElectro, potencia);
                         break;
+                        
+                    case "Mueble":
+                        String tamaño = txtTamaño.getText();
+                        String material = txtTamaño.getText();
+                        if (tamaño.isEmpty() || material.isEmpty()) {
+                            showError("Error", "Complete todos los campos específicos para mueble.");
+                            return;
+                        } 
+                        productoNuevo = new Muebles(nombre, precio, tamaño, material);
+                        break;
 
                     default:
                         showError("Error", "Tipo de producto no válido.");
@@ -160,13 +178,14 @@ public class Main extends Application {
         // Configuración de la tabla
         TableColumn<Productos, String> colNombre = new TableColumn<>("Nombre");
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-        colNombre.setPrefWidth(150);
+        colNombre.setPrefWidth(160);
         TableColumn<Productos, Double> colPrecio = new TableColumn<>("Precio");
         colPrecio.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrecio()).asObject());
-        colPrecio.setPrefWidth(150);
+        colPrecio.setPrefWidth(160);
         TableColumn<Productos, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
-        colId.setPrefWidth(150);
+        colId.setPrefWidth(160);
+        
         table.getColumns().addAll(colId, colNombre, colPrecio);
         table.setItems(listaProductos);
 
@@ -250,7 +269,7 @@ public class Main extends Application {
         // Funcionalidad del botón para "Ordenar"
         btnOrdenar.setOnAction(e -> {
             // Crear un diálogo de tipo 'ChoiceDialog' para elegir el criterio de ordenación
-            ChoiceDialog<String> dialog = new ChoiceDialog<>("Ordenar alfabéticamente", "Ordenar alfabéticamente", "Ordenar por precio");
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("Ordenar alfabéticamente", "Ordenar alfabéticamente", "Ordenar por precio ascendente", "Ordenar por precio descendente");
             dialog.setTitle("Ordenar productos");
             dialog.setHeaderText("Seleccione el criterio para ordenar los productos:");
             dialog.setContentText("Criterio de ordenación:");
@@ -260,14 +279,19 @@ public class Main extends Application {
                 try {
                     if ("Ordenar alfabéticamente".equals(criterioSeleccionado)) {
                         // Ordenar alfabéticamente
-                        gestor.ordenarProductosPor(Comparator.comparing(Productos::getNombre));
-                        table.setItems(FXCollections.observableList(gestor.listarProductos()));
+                        gestor.ordenarPorCriterioNatural();
+                        table.setItems(FXCollections.observableList(gestor.obtenerProductos()));
                         showError("Éxito", "Productos ordenados alfabéticamente.");
-                    } else if ("Ordenar por precio".equals(criterioSeleccionado)) {
+                    } else if ("Ordenar por precio ascendente".equals(criterioSeleccionado)) {
                         // Ordenar por precio
                         gestor.ordenarProductosPor(Comparator.comparingDouble(Productos::getPrecio));
-                        table.setItems(FXCollections.observableList(gestor.listarProductos()));
-                        showError("Éxito", "Productos ordenados por precio.");
+                        table.setItems(FXCollections.observableList(gestor.obtenerProductos()));
+                        showError("Éxito", "Productos ordenados por precio ascendentemente.");
+                    }
+                    else if ("Ordenar por precio descendente".equals(criterioSeleccionado)){
+                        gestor.ordenarProductosPor(Comparator.comparingDouble(Productos::getPrecio).reversed());
+                        table.setItems(FXCollections.observableList(gestor.obtenerProductos()));
+                        showError("Éxito", "Productos ordenados por precio descendentemente.");
                     }
                 } catch (Exception ex) {
                     showError("Error", "Hubo un problema al ordenar los productos: " + ex.getMessage());
@@ -279,19 +303,29 @@ public class Main extends Application {
         btnFiltrarPorTipo.setOnAction(e -> {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Filtrar Productos");
-            dialog.setHeaderText("Ingrese el tipo de producto (Ropa, Alimento, Electrodoméstico)");
+            dialog.setHeaderText("Ingrese el tipo de producto (Ropa, Alimento, Electrodoméstico, Mueble)");
             dialog.setContentText("Tipo:");
 
             dialog.showAndWait().ifPresent(tipoSeleccionado -> {
                 try {
-                    Iterator<Productos> iteradorFiltrado = gestor.obtenerIteradorPorTipo(tipoSeleccionado);
-                    ObservableList<Productos> productosFiltrados = FXCollections.observableArrayList();
-
-                    while (iteradorFiltrado.hasNext()) {
-                        productosFiltrados.add(iteradorFiltrado.next());
+                    if (tipoSeleccionado.equals("Ropa")) {
+                        List<Ropa> listaRopa = gestor.filtrarPorTipo(listaProductos, Ropa.class);
+                        listaRopa.forEach(ropa -> System.out.println("Producto: " + ropa.getNombre() + ", Precio: " + ropa.getPrecio()));
+                    }
+                    else if (tipoSeleccionado.equals("Electrodomestico")) {
+                        List<Electrodomesticos> listaElectrodomesticos = gestor.filtrarPorTipo(listaProductos, Electrodomesticos.class);
+                        listaElectrodomesticos.forEach(electrodomestico -> System.out.println("Producto: " + electrodomestico.getNombre() + ", Precio: " + electrodomestico.getPrecio()));
+                    }
+                    else if (tipoSeleccionado.equals("Alimento")) {
+                        List<Alimentos> listaAlimentos = gestor.filtrarPorTipo(listaProductos, Alimentos.class);
+                        listaAlimentos.forEach(alimento -> System.out.println("Producto: " + alimento.getNombre() + ", Precio: " + alimento.getPrecio()));
+                    }
+                    else if (tipoSeleccionado.equals("Mueble")) {
+                        List<Muebles> listaMuebles = gestor.filtrarPorTipo(listaProductos, Muebles.class);
+                        listaMuebles.forEach(mueble -> System.out.println("Producto: " + mueble.getNombre() + ", Precio: " + mueble.getPrecio()));                        
                     }
 
-                    table.setItems(productosFiltrados); // Mostrar los productos filtrados en la tabla
+                    // table.setItems(); // Mostrar los productos filtrados en la tabla
                 } catch (Exception ex) {
                     showError("Error", "No se pudo filtrar los productos: " + ex.getMessage());
                 }
@@ -306,7 +340,7 @@ public class Main extends Application {
 
             // Crear el ComboBox con las opciones de filtro
             ComboBox<String> comboTipoProducto = new ComboBox<>();
-            comboTipoProducto.getItems().addAll("Ropa", "Alimentos", "Electrodomesticos");
+            comboTipoProducto.getItems().addAll("Ropa", "Alimentos", "Electrodomesticos", "Muebles");
             comboTipoProducto.setPromptText("Selecciona el tipo de producto");
 
             // Crear el botón de aceptar
@@ -336,6 +370,8 @@ public class Main extends Application {
                                 return producto instanceof Alimentos;
                             case "Electrodomesticos":
                                 return producto instanceof Electrodomesticos;
+                            case "Muebles":
+                                return producto instanceof Muebles;
                             default:
                                 return false;
                         }
@@ -398,7 +434,7 @@ public class Main extends Application {
 
                     // Después de cargar los productos, actualizamos la tabla
                     ObservableList<Productos> productosCargados = FXCollections.observableArrayList(gestor.obtenerProductos());
-                    table.setItems(productosCargados);  // Establecer los productos en la tabla
+                    table.setItems(productosCargados);
 
                 } catch (Exception ex) {
                     showError("Error", "Hubo un problema al cargar el archivo: " + ex.getMessage());

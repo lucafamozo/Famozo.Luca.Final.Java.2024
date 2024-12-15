@@ -8,7 +8,7 @@ package gestorproductos;
  *
  * @author Luca
  */
-public class Electrodomesticos extends Productos implements IDescontable{
+public class Electrodomesticos extends Productos implements Ensamblable{
     private String marca;
     private String potencia;
     private TipoEnvio tipoEnvio;
@@ -20,9 +20,19 @@ public class Electrodomesticos extends Productos implements IDescontable{
         this.potencia = potencia;
     } 
     
-    // Constructor sobrecargado
+    // Constructores sobrecargados
     public Electrodomesticos(int id, String nombre, double precio) {
         super(nombre, precio);
+    }
+    
+    public Electrodomesticos(String nombre, double precio, String marca) {
+        super(nombre, precio); // Llamamos al constructor de la clase base (Productos)
+        this.marca = marca;
+    }
+    
+    public Electrodomesticos(int id, String nombre, double precio, TipoEnvio tipoEnvio) {
+        super(nombre, precio); // Llamamos al constructor de la clase base (Productos)
+        this.tipoEnvio = tipoEnvio;
     }
 
     // Getters y Setters
@@ -50,9 +60,34 @@ public class Electrodomesticos extends Productos implements IDescontable{
         this.tipoEnvio = tipoEnvio;
     }
     
-    // Sobrecarga método toString
+    // Sobrecargas
     @Override
     public String toString() {
         return super.toString() + " - Marca: " + marca + " - Potencia: " + potencia + "W";
+    }
+    
+    @Override
+    public double aplicarDescuento() {
+        return this.getPrecio() * 0.15; // Descuento del 15%
+    }
+    
+    @Override
+    public double calcularImpuestos() {
+        return this.getPrecio() * 0.25; // 25% de IVA
+    }
+
+    @Override
+    public double calcularCostoEnvio() {
+        return this.getPrecio() * 0.10; // 10% del precio como costo de envío
+    }
+    
+    // Sobrecargas de los métodos de la interfaz Ensamblable
+    // Sobrecarga de los métodos de la interfaz Ensamblable
+    public boolean requiereEnsamblaje(){
+        return false;
+    }
+    
+    public String instruccionesDeEnsamblaje(){
+        return "No requiere ensamblaje.";
     }
 }

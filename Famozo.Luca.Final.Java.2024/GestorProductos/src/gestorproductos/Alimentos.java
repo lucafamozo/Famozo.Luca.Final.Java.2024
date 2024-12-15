@@ -20,9 +20,19 @@ public class Alimentos extends Productos {
         this.categoria = categoria;
     }
     
-    // Constructor sobrecargado
+    // Constructores sobrecargados
     public Alimentos(int id, String nombre, double precio) {
         super(nombre, precio);
+    }
+    
+    public Alimentos(String nombre, double precio, String fechaCaducidad) {
+        super(nombre, precio); // Llamamos al constructor de la clase base (Productos)
+        this.fechaCaducidad = fechaCaducidad;
+    }
+    
+    public Alimentos(int id, String nombre, double precio, TipoEnvio tipoEnvio) {
+        super(nombre, precio); // Llamamos al constructor de la clase base (Productos)
+        this.tipoEnvio = tipoEnvio;
     }
 
     // Getters y Setters
@@ -50,9 +60,24 @@ public class Alimentos extends Productos {
         this.tipoEnvio = tipoEnvio;
     }
     
-    // Sobrecarga método toString
+    // Sobrecargas
     @Override
     public String toString() {
         return super.toString() + " - Fecha de caducidad: " + fechaCaducidad + " - Categoría: " + categoria;
+    }
+    
+    @Override
+    public double aplicarDescuento() {
+        return this.getPrecio() * 0.05; // Descuento del 5%
+    }
+
+    @Override
+    public double calcularImpuestos() {
+        return this.getPrecio() * 0.10; // 10% de IVA
+    }
+    
+    @Override
+    public double calcularCostoEnvio() {
+        return this.getPrecio() * 0.03; // 3% del precio como costo de envío
     }
 }
