@@ -53,5 +53,5 @@ El botón *'Ordenar'* permite realizar esto en la lista de productos en la tabla
 ![DiagramaUML_Final_Java_2024_FamozoLuca](https://github.com/user-attachments/assets/1da8c450-3ff7-4014-8bfc-b887f9c66002)
 
 
-### Sobre mí y experiencia con el proyecto
-Mi nombre es Luca Valentin Famozo, soy estudiante de la Universidad Tecnológica Nacional y actualmente estoy en el segundo año de la Tecnicatura Universitaria en Programación.
+### Sobre mí
+Mi nombre es Luca Valentin Famozo. Tengo 20 años. Realicé mis estudios primarios y secundarios en el Instituto de Enseñanza Privada Friuli. Soy estudiante de la Universidad Tecnológica Nacional y actualmente estoy en mi segundo año de la Tecnicatura Universitaria en Programación.
