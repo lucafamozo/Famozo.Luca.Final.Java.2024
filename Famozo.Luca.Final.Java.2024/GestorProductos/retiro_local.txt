@@ -1,0 +1,3 @@
+Productos para Retiro en Local
+-------------------------------------------------------
+Producto{id=1, nombre='salchipapa', precio=2.7} - Fecha de caducidad: 13/02/2025 - Categoría: callejera
